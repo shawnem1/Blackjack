@@ -58,37 +58,44 @@ puts 'Would you like to 1) Hit or 2) Stand?'
 h_or_s = gets.chomp
 
 while h_or_s == "1" do
-		player_cards << deck.sample
-		deck.delete(player_cards.last)
-		puts "Your hand is, #{player_cards} for a total of #{get_total(player_cards)}"
-		end	
+	player_cards << deck.sample
+	deck.delete(player_cards.last)
+
 	if get_total(player_cards) > 21
-		puts 'You busted, dealer wins'
-		exit
-		
-	elsif get_total(player_cards) == 21
-		puts 'Blackjack! You win!'
-		exit
+	puts 'You busted, dealer wins'
 	end
 
-		#elsif h_or_s == '2'
-		#puts "Your hand is, #{player_cards} for a total of #{get_total(player_cards)}"
+	if get_total(player_cards) == 21
+	puts 'Blackjack! You win!'
+	end
+		
+	puts "Your hand is, #{player_cards} for a total of #{get_total(player_cards)}"
+	puts 'Would you like to 1) Hit or 2) Stand?'
+	h_or_s = gets.chomp
+	if h_or_s == "2"
+	end
+end
 
 #Dealer now turns over other card
 puts "Dealers shows, #{dealer_cards}, for a total of #{get_total(dealer_cards)}"
 
 #Dealer deals until at least 17
-while get_total(dealer_cards) < 17 or get_total(dealer_cards) < get_total(player_cards) do
+while get_total(dealer_cards) < 17 do
 	puts 'Dealer now hits'
 	dealer_cards << deck.sample
 	deck.delete(dealer_cards.last)
 	puts "Dealers shows, #{dealer_cards}, for a total of #{get_total(dealer_cards)}"
+	
+	if get_total(dealer_cards) > get_total(player_cards) && get_total(dealer_cards) < 21
+		puts 'Dealer wins'
+	end
+
+	if get_total(dealer_cards) == 21
+		puts 'Blackjack! Dealer wins'
+	end
+
+	if get_total(dealer_cards) > 21
+		puts 'Dealer busts, YOU WIN!'
+	end	
 end
 
-if get_total(dealer_cards) > get_total(player_cards) && get_total(dealer_cards) < 21
-	puts 'Dealer wins'
-elsif get_total(dealer_cards) == 21
-	puts 'Blackjack! Dealer wins'
-elsif get_total(dealer_cards) > 21
-	puts 'Dealer busts, YOU WIN!'
-end
