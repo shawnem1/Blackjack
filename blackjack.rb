@@ -53,78 +53,149 @@ while play_again == "y" do
   puts "Dealer shows, #{dealer_cards[1]}"
   puts ''
   puts "Your hand is, #{player_cards} for a total of #{get_total(player_cards)}"
-  if get_total(player_cards) == 21
-    puts 'Blackjack! You win!'
-  end
-
   puts ''
 
-  puts 'Would you like to 1) Hit or 2) Stand?'
+  if get_total(player_cards) == 21
+    puts 'Blackjack! You win!'
+    puts ''
+    puts 'Would you like to play again? Enter y for yes and n for no.'
+    play_again = gets.chomp
+    if play_again == "y"
+      redo
+    elsif play_again == "n"
+      exit
+    end
+  end
+
+  #Players turn
+  puts 'Would you like to hit or stand? 1 for hit and 2 for stand' 
 
   h_or_s = gets.chomp
 
   while h_or_s == "1" do
     player_cards << deck.sample
     deck.delete(player_cards.last)
-
-    if get_total(player_cards) > 21
-      puts "Your hand is, #{player_cards} for a total of #{get_total(player_cards)}"
-      puts 'You busted, dealer wins'
-      h_or_s = "2"
-
-    end
-
-    if get_total(player_cards) == 21
-      puts "Your hand is, #{player_cards} for a total of #{get_total(player_cards)}"
-      h_or_s = "2"
-    end
-
+    puts 'You hit.'
+    puts ''
     puts "Your hand is, #{player_cards} for a total of #{get_total(player_cards)}"
     puts ''
-    puts 'Would you like to 1) Hit or 2) Stand?'
+    if get_total(player_cards) > 21
+      break
+    elsif get_total(player_cards) == 21
+      break
+    end  
+    puts 'Would you like to hit or stand? 1 for hit and 2 for stand'
     h_or_s = gets.chomp
-
+    if h_or_s == "2"
+      break
+    end
   end
 
-  #Dealer now turns over other card
-  puts "Dealers shows, #{dealer_cards}, for a total of #{get_total(dealer_cards)}"
+  if get_total(player_cards) == 21
+    puts '21! You win!'
+    puts ''
+    puts 'Would you like to play again? Enter y for yes and n for no.'
+    play_again = gets.chomp
+    if play_again == "y"
+      redo
+    elsif play_again == "n"
+      exit
+    end
+  elsif get_total(player_cards) > 21
+    puts 'You bust. Dealer wins.'
+    puts ''
+    puts 'Would you like to play again? Enter y for yes and n for no.'
+    play_again = gets.chomp
+    if play_again == "y"
+      redo
+    elsif play_again == "n"
+      exit
+    end
+  end
 
+  #Dealers turn
+  puts "Dealers shows, #{dealer_cards}, for a total of #{get_total(dealer_cards)}"
   puts ''
 
   if get_total(dealer_cards) == 21
-    puts 'Blackjack! Dealer wins'
+    puts 'Blackjack! Dealer wins.'
+    puts ''
+    puts 'Would you like to play again? Enter y for yes and n for no.'
+    play_again = gets.chomp
+    if play_again == "y"
+      redo
+    elsif play_again == "n"
+      exit
+    end
   end
 
-  #Dealer deals until at least 17
   while get_total(dealer_cards) < 17 do
-    puts 'Dealer now hits'
+    puts 'Dealer hits'
     dealer_cards << deck.sample
     deck.delete(dealer_cards.last)
     puts "Dealers shows, #{dealer_cards}, for a total of #{get_total(dealer_cards)}"
     puts ''
-
-    if get_total(dealer_cards) >= 17
+    if get_total(dealer_cards) < 17
+      redo
+    else
       break
     end
-
-  end
-
-  if (get_total(dealer_cards) < get_total(player_cards)) && (get_total(dealer_cards) < 22)
-    puts 'You win!'
-  end
-
-  if (get_total(dealer_cards) > get_total(player_cards)) && (get_total(dealer_cards) < 22)
-    puts 'Dealer wins'
-  end
-
-  if get_total(dealer_cards) == get_total(player_cards)
-    puts 'Push'
   end
 
   if get_total(dealer_cards) > 21
-    puts 'Dealer busts, YOU WIN!'
+    puts 'Dealer busts. You win!'
+    puts ''
+    puts 'Would you like to play again? Enter y for yes and n for no.'
+    play_again = gets.chomp
+    if play_again == "y"
+      redo
+    elsif play_again == "n"
+      exit
+    end
+  elsif get_total(dealer_cards) > get_total(player_cards)
+    puts ''
+    puts "Dealers shows, #{dealer_cards}, for a total of #{get_total(dealer_cards)}"
+    puts ''
+    puts "You show, #{player_cards}, for a total of #{get_total(player_cards)}"
+    puts ''
+    puts 'Dealer wins.'
+    puts ''
+    puts 'Would you like to play again? Enter y for yes and n for no.'
+    play_again = gets.chomp
+    if play_again == "y"
+      redo
+    elsif play_again == "n"
+      exit
+    end
+  elsif get_total(dealer_cards) < get_total(player_cards)
+    puts ''
+    puts "Dealers shows, #{dealer_cards}, for a total of #{get_total(dealer_cards)}"
+    puts ''
+    puts "You show, #{player_cards}, for a total of #{get_total(player_cards)}"
+    puts ''
+    puts 'You win!'
+    puts ''
+    puts 'Would you like to play again? Enter y for yes and n for no.'
+    play_again = gets.chomp
+    if play_again == "y"
+      redo
+    elsif play_again == "n"
+      exit
+    end
+  else
+    puts ''
+    puts "Dealers shows, #{dealer_cards}, for a total of #{get_total(dealer_cards)}"
+    puts ''
+    puts "You show, #{player_cards}, for a total of #{get_total(player_cards)}"
+    puts ''
+    puts 'Push!'
+    puts ''
+    puts 'Would you like to play again? Enter y for yes and n for no.'
+    play_again = gets.chomp
+    if play_again == "y"
+      redo
+    elsif play_again == "n"
+      exit
+    end
   end
-
-  puts 'Play again? Enter y) for yes and n) for no'
-  play_again = gets.chomp
 end
